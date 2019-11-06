@@ -3,10 +3,6 @@ const db = require('../data/db-config.js');
 
 const router = express.Router();
 
-// router.get('/', (req,res) => {
-//     console.log('testing')
-// })
-
 router.get('/', (req, res) => {
     db('cars')
     .then(cars => {
@@ -30,8 +26,7 @@ router.get('/', (req, res) => {
   });
   
   router.post('/', (req, res) => {
-    const carData = req.body;
-    db('cars').insert(carData)
+    db('cars').insert({ VIN: req.body.VIN, make: req.body.make, model: req.body.model, mileage: req.body.mileage, transmission_type: req.body.transmission_type, title: req.body.title})
     .then(ids => {
       db('cars').where({ id: ids[0] })
       .then(newCarEntry => {
